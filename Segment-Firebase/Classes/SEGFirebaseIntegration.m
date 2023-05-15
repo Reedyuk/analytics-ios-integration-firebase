@@ -142,6 +142,7 @@
 
 - (NSDictionary *)returnMappedFirebaseParameters:(NSDictionary *)properties
 {
+    NSDictionary *map = [NSDictionary init];
 //    NSDictionary *map = [NSDictionary dictionaryWithObjectsAndKeys:
 //                                          kFIRParameterItems, @"products",
 //                                          kFIRParameterItemCategory, @"category",
