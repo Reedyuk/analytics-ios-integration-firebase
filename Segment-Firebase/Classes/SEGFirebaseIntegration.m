@@ -1,7 +1,7 @@
 #import "SEGFirebaseIntegration.h"
 
-#import <FirebaseCore/FirebaseCore.h>
-#import <FirebaseAnalytics/FirebaseAnalytics.h>
+//#import <FirebaseCore/FirebaseCore.h>
+//#import <FirebaseAnalytics/FirebaseAnalytics.h>
 
 #import <Segment/SEGAnalyticsUtils.h>
 
@@ -14,20 +14,20 @@
 {
     if (self = [super init]) {
         self.settings = settings;
-        self.firebaseClass = [FIRAnalytics class];
-        NSString *deepLinkURLScheme = [self.settings objectForKey:@"deepLinkURLScheme"];
-        if (deepLinkURLScheme) {
-            [FIROptions defaultOptions].deepLinkURLScheme = deepLinkURLScheme;
-            SEGLog(@"[FIROptions defaultOptions].deepLinkURLScheme = %@;", deepLinkURLScheme);
-        }
-
-        if ([FIRApp defaultApp]) {
-            SEGLog(@"[FIRApp Configure] already called, skipping");
-            return self;
-        }
-
-        [FIRApp configure];
-        SEGLog(@"[FIRApp Configure]");
+//        self.firebaseClass = [FIRAnalytics class];
+//        NSString *deepLinkURLScheme = [self.settings objectForKey:@"deepLinkURLScheme"];
+//        if (deepLinkURLScheme) {
+//            [FIROptions defaultOptions].deepLinkURLScheme = deepLinkURLScheme;
+//            SEGLog(@"[FIROptions defaultOptions].deepLinkURLScheme = %@;", deepLinkURLScheme);
+//        }
+//
+//        if ([FIRApp defaultApp]) {
+//            SEGLog(@"[FIRApp Configure] already called, skipping");
+//            return self;
+//        }
+//
+//        [FIRApp configure];
+//        SEGLog(@"[FIRApp Configure]");
     }
     return self;
 }
@@ -43,38 +43,38 @@
 
 - (void)identify:(SEGIdentifyPayload *)payload
 {
-    if (payload.userId) {
-        [self.firebaseClass setUserID:payload.userId];
-        SEGLog(@"[FIRAnalytics setUserId:%@]", payload.userId);
-    }
-    // Firebase requires user properties to be an NSString
-    NSDictionary *mappedTraits = [SEGFirebaseIntegration mapToStrings:payload.traits];
-    [mappedTraits enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
-        NSString *trait = [key stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-        NSString *value = [obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        [self.firebaseClass setUserPropertyString:value forName:trait];
-        SEGLog(@"[FIRAnalytics setUserPropertyString:%@ forName:%@]", value, trait);
-    }];
+//    if (payload.userId) {
+//        [self.firebaseClass setUserID:payload.userId];
+//        SEGLog(@"[FIRAnalytics setUserId:%@]", payload.userId);
+//    }
+//    // Firebase requires user properties to be an NSString
+//    NSDictionary *mappedTraits = [SEGFirebaseIntegration mapToStrings:payload.traits];
+//    [mappedTraits enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
+//        NSString *trait = [key stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+//        NSString *value = [obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//        [self.firebaseClass setUserPropertyString:value forName:trait];
+//        SEGLog(@"[FIRAnalytics setUserPropertyString:%@ forName:%@]", value, trait);
+//    }];
 }
 
 - (void)track:(SEGTrackPayload *)payload
 {
-    NSString *name = [self formatFirebaseEventNames:payload.event];
-    NSDictionary *parameters = [self returnMappedFirebaseParameters:payload.properties];
-
-    [self.firebaseClass logEventWithName:name parameters:parameters];
-    SEGLog(@"[FIRAnalytics logEventWithName:%@ parameters:%@]", name, parameters);
+//    NSString *name = [self formatFirebaseEventNames:payload.event];
+//    NSDictionary *parameters = [self returnMappedFirebaseParameters:payload.properties];
+//
+//    [self.firebaseClass logEventWithName:name parameters:parameters];
+//    SEGLog(@"[FIRAnalytics logEventWithName:%@ parameters:%@]", name, parameters);
 }
 
 
 - (void)screen:(SEGScreenPayload *)payload
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.firebaseClass logEventWithName:kFIREventScreenView parameters:@{
-            kFIRParameterScreenName: payload.name
-        }];
-        SEGLog(@"[FIRAnalytics setScreenName:%@]", payload.name);
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.firebaseClass logEventWithName:kFIREventScreenView parameters:@{
+//            kFIRParameterScreenName: payload.name
+//        }];
+//        SEGLog(@"[FIRAnalytics setScreenName:%@]", payload.name);
+//    });
 }
 
 
@@ -108,21 +108,22 @@
 
 - (NSString *)formatFirebaseEventNames:(NSString *)event
 {
-    NSDictionary *mapper = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             kFIREventSelectContent, @"Product Clicked",
-                                             kFIREventViewItem, @"Product Viewed",
-                                             kFIREventAddToCart, @"Product Added",
-                                             kFIREventRemoveFromCart, @"Product Removed",
-                                             kFIREventBeginCheckout, @"Checkout Started",
-                                             kFIREventViewPromotion, @"Promotion Viewed",
-                                             kFIREventAddPaymentInfo, @"Payment Info Entered",
-                                             kFIREventPurchase, @"Order Completed",
-                                             kFIREventRefund, @"Order Refunded",
-                                             kFIREventViewItemList, @"Product List Viewed",
-                                             kFIREventAddToWishlist, @"Product Added to Wishlist",
-                                             kFIREventShare, @"Product Shared",
-                                             kFIREventShare, @"Cart Shared",
-                                             kFIREventSearch, @"Products Searched", nil];
+    NSDictionary *mapper = [NSDictionary init];
+//    NSDictionary *mapper = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                             kFIREventSelectContent, @"Product Clicked",
+//                                             kFIREventViewItem, @"Product Viewed",
+//                                             kFIREventAddToCart, @"Product Added",
+//                                             kFIREventRemoveFromCart, @"Product Removed",
+//                                             kFIREventBeginCheckout, @"Checkout Started",
+//                                             kFIREventViewPromotion, @"Promotion Viewed",
+//                                             kFIREventAddPaymentInfo, @"Payment Info Entered",
+//                                             kFIREventPurchase, @"Order Completed",
+//                                             kFIREventRefund, @"Order Refunded",
+//                                             kFIREventViewItemList, @"Product List Viewed",
+//                                             kFIREventAddToWishlist, @"Product Added to Wishlist",
+//                                             kFIREventShare, @"Product Shared",
+//                                             kFIREventShare, @"Cart Shared",
+//                                             kFIREventSearch, @"Products Searched", nil];
 
     NSString *mappedEvent = [mapper objectForKey:event];
     if (mappedEvent) {
@@ -141,21 +142,21 @@
 
 - (NSDictionary *)returnMappedFirebaseParameters:(NSDictionary *)properties
 {
-    NSDictionary *map = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          kFIRParameterItems, @"products",
-                                          kFIRParameterItemCategory, @"category",
-                                          kFIRParameterItemID, @"product_id",
-                                          kFIRParameterItemName, @"name",
-                                          kFIRParameterItemBrand, @"brand",
-                                          kFIRParameterPrice, @"price",
-                                          kFIRParameterQuantity, @"quantity",
-                                          kFIRParameterSearchTerm, @"query",
-                                          kFIRParameterShipping, @"shipping",
-                                          kFIRParameterTax, @"tax",
-                                          kFIRParameterValue, @"total",
-                                          kFIRParameterValue, @"revenue",
-                                          kFIRParameterTransactionID, @"order_id",
-                                          kFIRParameterCurrency, @"currency", nil];
+//    NSDictionary *map = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                          kFIRParameterItems, @"products",
+//                                          kFIRParameterItemCategory, @"category",
+//                                          kFIRParameterItemID, @"product_id",
+//                                          kFIRParameterItemName, @"name",
+//                                          kFIRParameterItemBrand, @"brand",
+//                                          kFIRParameterPrice, @"price",
+//                                          kFIRParameterQuantity, @"quantity",
+//                                          kFIRParameterSearchTerm, @"query",
+//                                          kFIRParameterShipping, @"shipping",
+//                                          kFIRParameterTax, @"tax",
+//                                          kFIRParameterValue, @"total",
+//                                          kFIRParameterValue, @"revenue",
+//                                          kFIRParameterTransactionID, @"order_id",
+//                                          kFIRParameterCurrency, @"currency", nil];
 
 
     return [SEGFirebaseIntegration mapToFirebaseParameters:properties withMap:map];
