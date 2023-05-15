@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.default_subspec = 'Core'
   s.static_framework = true
 
-  s.dependency 'Analytics'
+  s.dependency 'Analytics', :git => 'https://github.com/Reedyuk/analytics-ios.git'
   s.dependency 'Firebase', '~> 10.6.0'
   s.dependency 'Firebase/Core', '~> 10.6.0'
   s.dependency 'FirebaseAnalytics','~> 10.6.0'
