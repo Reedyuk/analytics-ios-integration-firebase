@@ -3,7 +3,7 @@
 #import <FirebaseCore/FirebaseCore.h>
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 
-#import <Analytics/SEGAnalyticsUtils.h>
+#import "SEGAnalyticsUtils.h"
 
 
 @implementation SEGFirebaseIntegration
