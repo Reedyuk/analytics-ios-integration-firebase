@@ -4,7 +4,7 @@
 //
 
 #import "SEGFirebaseIntegrationFactory.h"
-#import "SEGFirebaseIntegration.h"
+#import <Segment/SEGFirebaseIntegration.h>
 
 
 @implementation SEGFirebaseIntegrationFactory

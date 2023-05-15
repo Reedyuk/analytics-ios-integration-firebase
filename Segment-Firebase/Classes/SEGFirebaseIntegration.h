@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SEGIntegration.h"
+#import <Segment/SEGIntegration.h>
 
 
 @interface SEGFirebaseIntegration : NSObject <SEGIntegration>
