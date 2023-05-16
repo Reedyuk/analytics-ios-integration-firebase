@@ -7,6 +7,4 @@
 
 + (instancetype)instance;
 
-- (id<SEGIntegration>)createWithSettings:(NSDictionary *)settings forAnalytics:(SEGAnalytics *)analytics;
-
 @end
